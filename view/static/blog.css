@@ -1,0 +1,66 @@
+/* Reset some default styles */
+body, h1, p {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f6f6f6;
+    color: #333;
+    line-height: 1.6;
+}
+
+header {
+     background:  #B197FC;
+    padding: 15px 20px;
+    color: white;
+}
+
+.nav {
+    display: flex;
+    gap: 20px;
+}
+
+.nav a {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 16px;
+}
+
+.nav a:hover {
+    text-decoration: underline;
+}
+
+.blog-container {
+    max-width: 900px;
+    margin: 40px auto;
+    padding: 20px;
+    background-color: #fff;
+    
+    
+}
+
+.blog-post-view {
+    text-align: left;
+}
+
+.blog-title {
+    font-size: 28px;
+    color: #2c3e50;
+    margin-bottom: 20px;
+}
+
+.blog-image img {
+    max-width: 100%;
+   
+    border-radius: 6px;
+    margin-bottom: 20px;
+    box-shadow: 0 0 8px rgba(0,0,0,0.05);
+}
+
+.blog-description p {
+    margin-bottom: 20px;
+    font-size: 16px;
+}

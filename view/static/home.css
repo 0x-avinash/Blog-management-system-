@@ -1,0 +1,108 @@
+/* Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f4f4f4;
+ 
+}
+
+header {
+  background:  #B197FC;
+  padding: 15px;
+  place-items: center;
+  position: sticky;
+}
+
+header ul {
+  list-style: none;
+  display: flex;
+  gap: 20px;
+}
+
+header ul li a {
+  color: #fff;
+  text-decoration: none;
+  font-weight: bold;
+  font-size: larger;
+ 
+}
+
+.blog-container {
+  max-width: 1000px;
+  margin: 40px auto;
+}
+
+
+.blog-post {
+  display: flex;
+  background-color: #fff;
+  margin-bottom: 30px;
+  border-bottom: 1px solid #ddd;
+  padding: 20px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+  transition: transform 0.3s ease;
+}
+
+
+
+.blog-image img {
+  width: 200px;
+  height: 250px;
+  object-fit: cover;
+  
+}
+
+.blog-content {
+  padding-left: 20px;
+  flex: 1;
+  font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+}
+
+.blog-content h3 {
+  font-size: 20px;
+  color: #333;
+  margin-bottom: 10px;
+  text-transform: uppercase;
+}
+
+.blog-meta {
+  font-size: 13px;
+  color: #999;
+  margin-bottom: 10px;
+}
+
+.blog-description {
+  font-size: 14px;
+  color: #444;
+  margin-bottom: 10px;
+  line-height: 1.5;
+}
+
+.read-more {
+  text-decoration: none;
+  color: #d35400;
+  font-weight: bold;
+  font-size: 14px;
+}
+
+/* Responsive (mobile view) */
+@media (max-width: 768px) {
+  .blog-post {
+    flex-direction: column;
+  }
+
+  .blog-image img {
+    width: 100%;
+    height: auto;
+  }
+
+  .blog-content {
+    padding-left: 0;
+    padding-top: 15px;
+  }
+}
