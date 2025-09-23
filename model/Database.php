@@ -4,7 +4,6 @@ class Database
 {
     private static $instance = null;
     private $connection;
-
     private $host = "localhost";
     private $username = 'root';
     private $password = '';
@@ -70,6 +69,7 @@ class Database
             die("Prepare failed: " . $this->getConnection()->error);
         }
         $stmt->execute();
+        
 
         return $stmt->get_result();
     }
@@ -95,5 +95,72 @@ class Database
         $stmt->execute();
         $stmt->close();
     }
+    public function adduser($username, $email, $password)
+    {
+        // check if email already exists
+        $checkEmailStmt = $this->getConnection()->prepare("SELECT email FROM register_user WHERE email = ?");
+        $checkEmailStmt->bind_param("s", $email); // bind the email value
+        $checkEmailStmt->execute();
+        $checkEmailStmt->store_result();  //buffer (store) the entire result set in memory on the client side.
+
+        if ($checkEmailStmt->num_rows > 0) {
+            echo "Email ID already exists";
+            return false;
+        } else {
+            //  Insert new user
+            $stmt = $this->getConnection()->prepare("INSERT INTO register_user (username, email, password) VALUES (?, ?, ?)");
+
+            if (!$stmt) {
+                die("Prepare failed: " . $this->getConnection()->error);
+            }
+
+            $stmt->bind_param("sss", $username, $email, $password);
+            $stmt->execute();
+            echo "User created successfully";
+            return $this->getConnection()->insert_id; //  Return insert ID or success message
+        }
+    }
+    public function getPassword($email)
+    {
+        $stmt = $this->getConnection()->prepare("SELECT password FROM register_user WHERE email = ?");
+        $stmt->bind_param("s", $email);
+        $stmt->execute();
+        $stmt->store_result();
+
+        if ($stmt->num_rows > 0) {
+            $stmt->bind_result($db_password);
+            $stmt->fetch();
+            return $db_password;  
+        } else {
+            return false;  
+        }
+    }
+
+    public function createSession($email)
+    {
+        $stmt = $this->getConnection()->prepare("SELECT * from register_user where email= ?");
+        $stmt->execute();
+        $stmt->execute();
+        return $stmt->get_result();
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }
 ?>

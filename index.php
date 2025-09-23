@@ -1,9 +1,10 @@
 <?php
 require_once './controller/Home.php';
-
+require_once  './controller/login.php';
 
 $path = $_SERVER['PATH_INFO'] ?? '';
 $home = new Home();
+$login = new Login();
 //echo $path;
 if ($path === '/add') {
     $home->addAction();
@@ -30,6 +31,20 @@ if ($path === '/home'){
 }
 if ($path === '/page'){
     $home->pageView();
+}
+if ($path === '/register'){
+    $login->register();
+}
+
+if ($path === '/login'){
+    $login->login();
+}
+if($path === '/savecredientials'){
+    $login->save_credentials();
+}
+
+if ($path ==='/session'){
+    $login->session();
 }
 
 ?>

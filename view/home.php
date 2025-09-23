@@ -1,3 +1,4 @@
+<?php session_start(); ?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -9,14 +10,19 @@
 </head>
 
 <body>
+<header style="display: flex; justify-content: space-between; align-items: center;">
+    <div style="color: white; font-weight: bold;">Home</div>
+    
+    <ul style="list-style: none; display: flex; gap: 20px; margin: 0; padding: 0;">
+        <li><a href="add" style="color: white; text-decoration: none;">Add Blog</a></li>
+        <li><a href="view" style="color: white; text-decoration: none;">List</a></li>
+    </ul>
 
-    <header>
-        <span style="color: white; font-weight: bold;">Home</span>
-        <ul>
-            <li><a href="add">Add Blog</a></li>
-            <li><a href="view">List</a></li>
-        </ul>
-    </header>
+    <div>
+        <a href="register" style="color: white; text-decoration: none; font-weight: bold;">Register</a>
+    </div>
+</header>
+
 
     <div class="blog-container">
         <?php if (!empty($data)): ?>
@@ -40,4 +46,5 @@
     </div>
 
 </body>
+
 </html>
