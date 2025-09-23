@@ -12,7 +12,7 @@ class Login
     {
         include 'view/register.php';
     }
-    public function save_credentials()
+    public function saveCredentials()
     {
         if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit'])) {
             $username = $_POST['username'];
@@ -22,10 +22,16 @@ class Login
             $this->db->adduser($username, $email, $password);
 
             header('Location: /avinash/blog/index.php/login');
-            exit(); //  stop script after redirect
+
         }
     }
     public function login()
+    {
+
+        include 'view/login.php';
+    }
+
+    public function checkCredential()
     {
         if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit'])) {
             $email = $_POST['email'];
@@ -33,31 +39,38 @@ class Login
             $dbPassword = $this->db->getPassword($email);
             if ($dbPassword) {
                 if ($password === $dbPassword) {
-                    echo "Login successful";
-                    header("Location: /avinash/blog/index.php/session");
+
+                    $_SESSION['message'] = "Login successful";
+                    $email = $_POST['email'];
+                    $user_data = $this->db->createSession($email); // returns array of rows
+                    if (!empty($user_data)) {
+                        $user = $user_data[0];
+                        // Store in session
+                        $_SESSION['user_id'] = $user['id'];
+                        $_SESSION['username'] = $user['username'];
+
+                    } else {
+                        $_SESSION['message'] = 'User not found';
+                        echo "User not found.";
+                    }
+                    header("Location: /avinash/blog/index.php/home");
                 } else {
-                    echo "Incorrect password";
+                    echo 'Incorrect password';
+                    header("Location: /avinash/blog/index.php/login");
                 }
             } else {
-                echo "Email not found";
+                echo 'Email not found';
+                header("Location: /avinash/blog/index.php/login");
             }
         }
-        include 'view/login.php';
     }
 
-    public function session()
+    public function logout()
     {
-
         session_start();
-        echo "<br> id->";
-        echo session_id();
-        echo "<br session->>";
-        print_r($_SESSION);
-        echo "<br> ->request";
-        print_r($_POST);
-        echo "<br>";
-        $_SESSION['username'] = $_POST['email'];
-        echo "Sesssion Start username :" . $_SESSION['username'];
+        session_unset();
+        session_destroy();
+        header("Location: /avinash/blog/index.php/login");
     }
 
 

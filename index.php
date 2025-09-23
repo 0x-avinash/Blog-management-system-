@@ -1,10 +1,12 @@
 <?php
+session_start();
 require_once './controller/Home.php';
 require_once  './controller/login.php';
 
 $path = $_SERVER['PATH_INFO'] ?? '';
 $home = new Home();
 $login = new Login();
+
 //echo $path;
 if ($path === '/add') {
     $home->addAction();
@@ -40,11 +42,14 @@ if ($path === '/login'){
     $login->login();
 }
 if($path === '/savecredientials'){
-    $login->save_credentials();
+    $login->saveCredentials();
 }
 
 if ($path ==='/session'){
-    $login->session();
+    $login->checkCredential();
+}
+if ($path ==='/logout'){
+    $login->logout();
 }
 
 ?>

@@ -1,4 +1,4 @@
-<?php session_start(); ?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -12,14 +12,22 @@
 <body>
 <header style="display: flex; justify-content: space-between; align-items: center;">
     <div style="color: white; font-weight: bold;">Home</div>
-    
+
     <ul style="list-style: none; display: flex; gap: 20px; margin: 0; padding: 0;">
-        <li><a href="add" style="color: white; text-decoration: none;">Add Blog</a></li>
-        <li><a href="view" style="color: white; text-decoration: none;">List</a></li>
+        <?php if ($isLoggedIn): ?>
+            <li><a href="add" style="color: white; text-decoration: none;">Add Blog</a></li>
+            <li><a href="view" style="color: white; text-decoration: none;">List</a></li>
+        <?php endif; ?>
     </ul>
 
-    <div>
-        <a href="register" style="color: white; text-decoration: none; font-weight: bold;">Register</a>
+    <div style="color: white; font-weight: bold;">
+        <?php if ($isLoggedIn): ?>
+            Hello, <?php echo htmlspecialchars($_SESSION['username']); ?> |
+            <a href="logout" style="color: white; text-decoration: none;">Logout</a>
+        <?php else: ?>
+            <a href="register" style="color: white; text-decoration: none;">Register</a> |
+            <a href="login" style="color: white; text-decoration: none;">Login</a>
+        <?php endif; ?>
     </div>
 </header>
 

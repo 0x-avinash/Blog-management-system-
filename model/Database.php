@@ -17,7 +17,6 @@ class Database
             $this->password,
             $this->dbname
         );
-
         if ($this->connection->connect_error) {
             die("Connection failed: " . $this->connection->connect_error);
         }
@@ -36,13 +35,13 @@ class Database
         return $this->connection;
     }
 
-    public function addBlog($title, $description, $image_path)
+    public function addBlog($user_id, $title, $description, $image_path)
     {
-        $stmt = $this->getConnection()->prepare("INSERT INTO blog_post (title, description, image_path) VALUES (?, ?, ?)");
+        $stmt = $this->getConnection()->prepare("INSERT INTO blog_post (user_id,title, description, image_path) VALUES (?,?,?,?)");
         if (!$stmt) {
             die("Prepare failed: " . $this->getConnection()->error);
         }
-        $stmt->bind_param("sss", $title, $description, $image_path);
+        $stmt->bind_param("isss", $user_id, $title, $description, $image_path);
         if (!$stmt->execute()) {
             die("Execution failed: " . $stmt->error);
         }
@@ -69,8 +68,6 @@ class Database
             die("Prepare failed: " . $this->getConnection()->error);
         }
         $stmt->execute();
-        
-
         return $stmt->get_result();
     }
 
@@ -102,7 +99,6 @@ class Database
         $checkEmailStmt->bind_param("s", $email); // bind the email value
         $checkEmailStmt->execute();
         $checkEmailStmt->store_result();  //buffer (store) the entire result set in memory on the client side.
-
         if ($checkEmailStmt->num_rows > 0) {
             echo "Email ID already exists";
             return false;
@@ -113,7 +109,6 @@ class Database
             if (!$stmt) {
                 die("Prepare failed: " . $this->getConnection()->error);
             }
-
             $stmt->bind_param("sss", $username, $email, $password);
             $stmt->execute();
             echo "User created successfully";
@@ -126,20 +121,36 @@ class Database
         $stmt->bind_param("s", $email);
         $stmt->execute();
         $stmt->store_result();
-
         if ($stmt->num_rows > 0) {
             $stmt->bind_result($db_password);
             $stmt->fetch();
-            return $db_password;  
+            return $db_password;
         } else {
-            return false;  
+            return false;
         }
     }
 
     public function createSession($email)
     {
-        $stmt = $this->getConnection()->prepare("SELECT * from register_user where email= ?");
+        $stmt = $this->getConnection()->prepare("SELECT id, username, email FROM register_user WHERE email = ?");
+        $stmt->bind_param("s", $email);
         $stmt->execute();
+        $result = $stmt->get_result(); // Get mysqli_result object
+        $data = [];
+        while ($row = $result->fetch_assoc()) { // fetch_assoc() called on $result, 
+            $data[] = $row;
+        }
+        $stmt->close();  // Close the statement to free resources
+        return $data;
+    }
+
+    public function getDataByUserID($user_id)
+    {
+        $stmt = $this->getConnection()->prepare("SELECT * FROM blog_post WHERE user_id = ?");
+        if (!$stmt) {
+            die("Prepare failed: " . $this->getConnection()->error);
+        }
+        $stmt->bind_param("i", $user_id);
         $stmt->execute();
         return $stmt->get_result();
     }

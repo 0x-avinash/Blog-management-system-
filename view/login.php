@@ -14,7 +14,7 @@
     <div class="content">
       <div class="form-content">
         <h3>Login User</h3>
-        <form method="POST" >
+        <form method="POST"  action ="http://localhost/avinash/blog/index.php/session" >
           <input type="email" name="email" placeholder="email" required>
           <input type="password" name="password" placeholder="Enter password" required>
           <input type="submit" name="submit" class="submitbtn" value="Submit">

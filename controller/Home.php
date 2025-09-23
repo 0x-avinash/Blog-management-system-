@@ -36,6 +36,9 @@ class Home
 
     public function addAction()
     {
+        if (!isset($_SESSION['user_id'])) {
+            header("Location: /avinash/blog/index.php/login");
+        }
         include 'view/add.php';
     }
 
@@ -45,7 +48,7 @@ class Home
             $title = trim($_POST['title']);
             $description = trim($_POST['description']);
             $id = isset($_POST['id']) ? (int) $_POST['id'] : null;
-
+            $user_id = isset($_SESSION['user_id']) ? (int) $_SESSION['user_id'] : null;
             $image_path = $this->uploadfile();
             if (!$image_path) {
                 $image_path = $_POST['old_image'] ?? '';
@@ -54,7 +57,7 @@ class Home
 
                 $this->db->editBlog($title, $description, $image_path, $id);
             } else {
-                $this->db->addBlog($title, $description, $image_path);
+                $this->db->addBlog($user_id, $title, $description, $image_path);
             }
 
             header('Location: /avinash/blog/index.php/view');
@@ -64,6 +67,9 @@ class Home
 
     public function deleteAction()
     {
+        if (!isset($_SESSION['user_id'])) {
+            header("Location: /avinash/blog/index.php/login");
+        }
         if (isset($_GET['id'])) {
             $id = (int) $_GET['id'];
             $this->db->deleteblog($id);
@@ -74,7 +80,11 @@ class Home
 
     public function listView()
     {
-        $result = $this->db->getAllblog();
+        if (!isset($_SESSION['user_id'])) {
+            header("Location: /avinash/blog/index.php/login");
+        }
+        $user_id = $_SESSION['user_id'];
+        $result = $this->db->getDataByUserID($user_id);
         $post = [];
 
         if ($result && $result->num_rows > 0) {
@@ -88,6 +98,9 @@ class Home
 
     public function editAction()
     {
+        if (!isset($_SESSION['user_id'])) {
+            header("Location: /avinash/blog/index.php/login");
+        }
         $id = isset($_GET['id']) ? (int) $_GET['id'] : null;
         $stmt = $this->db->getDataByID($id);
         $result = $stmt->fetch_array();
@@ -102,7 +115,7 @@ class Home
         while ($row = $stmt->fetch_assoc()) {
             $data[] = $row;
         }
-
+        $isLoggedIn = isset($_SESSION['username']);
         include 'view/home.php';
     }
 
