@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -12,6 +13,7 @@
 
   <div class="container">
     <div class="content">
+        <center><h1 style="color:red"><?php  echo $message ?></h1></center> 
       <div class="form-content">
         <h3>Login User</h3>
         <form method="POST"  action ="http://localhost/avinash/blog/index.php/session" >

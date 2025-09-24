@@ -18,16 +18,15 @@ class Login
             $username = $_POST['username'];
             $email = $_POST['email'];
             $password = $_POST['password'];
-
             $this->db->adduser($username, $email, $password);
-
             header('Location: /avinash/blog/index.php/login');
 
         }
     }
     public function login()
     {
-
+        $message = $_SESSION['message'] ?? null;
+        unset($_SESSION['message']); 
         include 'view/login.php';
     }
 
@@ -51,15 +50,19 @@ class Login
 
                     } else {
                         $_SESSION['message'] = 'User not found';
-                        echo "User not found.";
+                        //echo "User not found.";
                     }
                     header("Location: /avinash/blog/index.php/home");
                 } else {
-                    echo 'Incorrect password';
+                    $message = 'Incorrect password';
+                    $_SESSION['message'] = $message;
+                   // echo 'Incorrect password';
                     header("Location: /avinash/blog/index.php/login");
                 }
             } else {
-                echo 'Email not found';
+                $message= 'Email not found';
+                $_SESSION['message'] = $message;
+                // echo 'Email not found';
                 header("Location: /avinash/blog/index.php/login");
             }
         }
@@ -70,7 +73,7 @@ class Login
         session_start();
         session_unset();
         session_destroy();
-        header("Location: /avinash/blog/index.php/login");
+        header("Location: /avinash/blog/index.php/home");
     }
 
 

@@ -5,7 +5,6 @@ require_once __DIR__ . '/../model/Database.php';
 class Home
 {
     private $db;
-
     public function __construct()
     {
         $this->db = Database::getInstance();
@@ -118,8 +117,6 @@ class Home
         $isLoggedIn = isset($_SESSION['username']);
         include 'view/home.php';
     }
-
-
     function pageView()
     {
         $id = isset($_GET['id']) ? (int) $_GET['id'] : null;
