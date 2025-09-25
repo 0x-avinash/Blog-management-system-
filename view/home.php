@@ -11,6 +11,7 @@
 </head>
 
 <body>
+    <!--header-->
 <header style="display: flex; justify-content: space-between; align-items: center;">
     <div style="color: white; font-weight: bold;">Home</div>
 
@@ -32,7 +33,7 @@
     </div>
 </header>
 
-
+<!--main content-->
     <div class="blog-container">
         <?php if (!empty($data)): ?>
             <?php foreach ($data as $item): ?>
@@ -54,25 +55,36 @@
         <?php endif; ?>
     </div>
 
-     
-<div class="pagination" style="text-align:center; margin-top: 30px; color:#B197FC; margin-bottom: 30px;">
+
+    <!--pagination-->
+    <div class="pagination" style="text-align: center; margin: 30px 0; display: flex; justify-content: center; align-items: center; gap: 10px;">
     <?php if ($page > 1): ?>
-        <a href="?page=<?= $page - 1 ?>" style="margin-right: 10px; text-decoration: none"><i class="fa-sharp fa-solid fa-angles-left"></i> Prev</a>
+        <a href="?page=<?= $page - 1 ?>" style="padding: 10px 20px; border: 1px solid #d1d5db; border-radius: 6px; text-decoration: none; color: #111827; font-weight: 500;"> PREV</a>
     <?php endif; ?>
-
-    <?php for ($i = 1; $i <= $totalPages; $i++): ?>
-        <?php if ($i == $page): ?>
-            <strong style="margin: 0 5px; color: blue; padding: 5px;"><?= $i ?></strong>
+    <?php
+    $range = 2; // how many pages to show before and after current
+    $start = max(1, $page - $range);
+    $end = min($totalPages, $page + $range);
+    if ($start > 1) {
+        echo '<a href="?page=1" style="padding: 8px 12px; text-decoration: none; color: #111827;">1</a>';
+        if ($start > 2) echo '<span style="padding: 8px 12px;">...</span>';
+    }
+    for ($i = $start; $i <= $end; $i++):
+        if ($i == $page): ?>
+            <span style="padding: 10px 15px; background-color: #2563eb; color: white; border-radius: 6px; font-weight: bold;"><?= $i ?></span>
         <?php else: ?>
-            <a href="?page=<?= $i ?>" style="margin: 0 5px;  padding:10px  ;border: 1px solid black; "><?= $i ?></a>
-        <?php endif; ?>
-    <?php endfor; ?>
-
+            <a href="?page=<?= $i ?>" style="padding: 10px 15px; text-decoration: none; color: #111827; border-radius: 6px;"><?= $i ?></a>
+        <?php endif;
+    endfor;
+    if ($end < $totalPages) {
+        if ($end < $totalPages - 1) echo '<span style="padding: 8px 12px;">...</span>';
+        echo '<a href="?page=' . $totalPages . '" style="padding: 8px 12px; text-decoration: none; color: #111827;">' . $totalPages . '</a>';
+    }
+    ?>
     <?php if ($page < $totalPages): ?>
-        <a href="?page=<?= $page + 1 ?>" style="margin-left: 10px; text-decoration: none;">Next  <i class="fas fa-angle-double-right"></i> </a>
+        <a href="?page=<?= $page + 1 ?>" style="padding: 10px 20px; border: 1px solid #d1d5db; border-radius: 6px; text-decoration: none; color: #111827; font-weight: 500;">NEXT </a>
     <?php endif; ?>
 </div>
-
 
 
 </body>

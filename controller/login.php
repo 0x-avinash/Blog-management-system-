@@ -76,9 +76,6 @@ class Login
         header("Location: /avinash/blog/index.php/home");
     }
     
-    
-
-
 }
 
 
