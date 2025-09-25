@@ -7,6 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Welcome to Blog Website</title>
     <link rel="stylesheet" href="/avinash/blog/view/static/home.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 
 <body>
@@ -54,21 +55,21 @@
     </div>
 
      
-<div class="pagination" style="text-align:center; margin-top: 30px;">
+<div class="pagination" style="text-align:center; margin-top: 30px; color:#B197FC; margin-bottom: 30px;">
     <?php if ($page > 1): ?>
-        <a href="?page=<?= $page - 1 ?>" style="margin-right: 10px;">&#8592; Prev</a>
+        <a href="?page=<?= $page - 1 ?>" style="margin-right: 10px; text-decoration: none"><i class="fa-sharp fa-solid fa-angles-left"></i> Prev</a>
     <?php endif; ?>
 
     <?php for ($i = 1; $i <= $totalPages; $i++): ?>
         <?php if ($i == $page): ?>
-            <strong style="margin: 0 5px;"><?= $i ?></strong>
+            <strong style="margin: 0 5px; color: blue; padding: 5px;"><?= $i ?></strong>
         <?php else: ?>
-            <a href="?page=<?= $i ?>" style="margin: 0 5px;"><?= $i ?></a>
+            <a href="?page=<?= $i ?>" style="margin: 0 5px;  padding:10px  ;border: 1px solid black; "><?= $i ?></a>
         <?php endif; ?>
     <?php endfor; ?>
 
     <?php if ($page < $totalPages): ?>
-        <a href="?page=<?= $page + 1 ?>" style="margin-left: 10px;">Next &#8594;</a>
+        <a href="?page=<?= $page + 1 ?>" style="margin-left: 10px; text-decoration: none;">Next  <i class="fas fa-angle-double-right"></i> </a>
     <?php endif; ?>
 </div>
 
