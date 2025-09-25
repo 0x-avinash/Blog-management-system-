@@ -119,8 +119,6 @@ class Home
         $isLoggedIn = isset($_SESSION['username']);
 
         include 'view/home.php';
-
-
     }
     function pageView()
     {
