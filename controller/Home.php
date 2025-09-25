@@ -108,14 +108,19 @@ class Home
 
     public function home()
     {
-        $stmt = $this->db->getAllblog();
-        $data = [];
-
-        while ($row = $stmt->fetch_assoc()) {
-            $data[] = $row;
-        }
+        
+        $postPerPage =3;
+        $page =isset($_GET['page'])?(int)$_GET['page']:1;
+        $totalPosts =$this->db->getTotalItems();
+        $offset = ($page - 1) * $postPerPage;
+        $data = $this->db->getDataWithLimit($postPerPage,$offset);
+        //totalpage calculation
+        $totalPages = ceil($totalPosts/$postPerPage);
         $isLoggedIn = isset($_SESSION['username']);
+        
         include 'view/home.php';
+       
+        
     }
     function pageView()
     {
@@ -125,5 +130,9 @@ class Home
         include 'view/page.php';
 
     }
+    
+    
+   
+
 }
 ?>

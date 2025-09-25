@@ -81,7 +81,6 @@ class Database
         $stmt->execute();
         return $stmt->get_result();
     }
-
     public function deleteblog($id)
     {
         $stmt = $this->getConnection()->prepare("DELETE FROM blog_post WHERE id = ?");
@@ -155,11 +154,28 @@ class Database
         return $stmt->get_result();
     }
 
-
-
-
-
-
+     public function getTotalItems() {
+        $sql = "SELECT COUNT(*) as total FROM blog_post";
+        $result = $this->getConnection()->query($sql);
+        if(!$result){
+            
+        }
+        $row = $result->fetch_assoc();
+        
+        return $row['total'];
+    }
+    
+     public function getDataWithLimit($limit, $offset) {
+        $limit = (int)$limit;
+        $offset = (int)$offset;
+        $sql= "SELECT * FROM blog_post LIMIT $limit OFFSET $offset";
+        $result =  $this->getConnection()->query($sql);
+        $items = [];
+        while ($row = $result->fetch_assoc()) {
+            $items[] = $row;
+        }
+        return  $items;
+    }
 
 
 

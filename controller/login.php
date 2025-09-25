@@ -75,7 +75,8 @@ class Login
         session_destroy();
         header("Location: /avinash/blog/index.php/home");
     }
-
+    
+    
 
 
 }
